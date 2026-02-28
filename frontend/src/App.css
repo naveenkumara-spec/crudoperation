@@ -1,0 +1,53 @@
+:root {
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light;
+  color: #333;
+  background-color: #f0f2f5;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+}
+
+.app-wrapper {
+  min-height: 100vh;
+}
+
+/* Custom table header styling to match image */
+.ant-table-thead>tr>th {
+  background-color: #fafafa !important;
+  color: #262626 !important;
+  font-weight: 700 !important;
+}
+
+.ant-table-bordered .ant-table-container {
+  border: 1px solid #f0f0f0 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .ant-form-inline {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+
+  .ant-form-item {
+    margin-right: 0 !important;
+    width: 100% !important;
+  }
+
+  .ant-input,
+  .ant-input-number {
+    width: 100% !important;
+  }
+}
