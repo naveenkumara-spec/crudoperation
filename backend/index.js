@@ -622,7 +622,7 @@ app.get('/api/attendance/report', authenticateToken, async (req, res) => {
 const frontendPath = path.join(__dirname, '../frontend/dist');
 if (fs.existsSync(frontendPath)) {
     app.use(express.static(frontendPath));
-    app.get('/(.*)', (req, res) => {
+    app.get(/.*/, (req, res) => {
         if (!req.path.startsWith('/api')) {
             res.sendFile(path.join(frontendPath, 'index.html'));
         }
