@@ -616,9 +616,20 @@ app.get('/api/attendance/report', authenticateToken, async (req, res) => {
     }
 });
 
-app.get('/', (req, res) => {
-    res.send('EMS API v2.0 - RBAC & CRUD Ready');
-});
+// Serve frontend files in production
+const frontendPath = path.join(__dirname, '../frontend/dist');
+if (fs.existsSync(frontendPath)) {
+    app.use(express.static(frontendPath));
+    app.get('*', (req, res) => {
+        if (!req.path.startsWith('/api')) {
+            res.sendFile(path.join(frontendPath, 'index.html'));
+        }
+    });
+} else {
+    app.get('/', (req, res) => {
+        res.send('EMS API v2.0 - RBAC & CRUD Ready (Frontend not built)');
+    });
+}
 
 app.listen(port, () => {
     console.log(`🚀 Server running on port ${port}`);
