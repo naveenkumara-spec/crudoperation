@@ -36,16 +36,18 @@ app.use((req, res, next) => {
     next();
 });
 
-// Database connection
+const isRailway = process.env.RAILWAY_ENVIRONMENT || process.env.RAILWAY_PROJECT_NAME;
+
 const poolConfig = process.env.DATABASE_URL ? {
     connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false }
+    ssl: process.env.DATABASE_URL.includes('railway') ? false : { rejectUnauthorized: false }
 } : {
-    user: process.env.DB_USER || 'postgres',
-    host: process.env.DB_HOST || 'db',
-    database: process.env.DB_NAME || 'crud_db',
-    password: process.env.DB_PASSWORD || 'root',
-    port: process.env.DB_PORT || 5432,
+    host: process.env.PGHOST || process.env.DB_HOST || (isRailway ? undefined : 'localhost'),
+    user: process.env.PGUSER || process.env.DB_USER || 'postgres',
+    password: process.env.PGPASSWORD || process.env.DB_PASSWORD || 'root',
+    database: process.env.PGDATABASE || process.env.DB_NAME || 'crud_db',
+    port: process.env.PGPORT || process.env.DB_PORT || 5432,
+    ssl: (process.env.PGHOST && !process.env.PGHOST.includes('railway')) ? { rejectUnauthorized: false } : false
 };
 
 const pool = new Pool(poolConfig);
